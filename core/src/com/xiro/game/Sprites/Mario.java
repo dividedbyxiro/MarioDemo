@@ -10,6 +10,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 
 /**
@@ -38,8 +39,11 @@ public class Mario extends Sprite
 		
 		FixtureDef fdef = new FixtureDef();
 		CircleShape shape = new CircleShape();
+//		PolygonShape shape = new PolygonShape();
+//		shape.setAsBox(50/PPM, 5/PPM);
 		shape.setRadius(5 / PPM);
 		fdef.shape = shape;
+//		fdef.density = 10;
 		b2body.createFixture(fdef);
 		
 	}

@@ -135,7 +135,16 @@ public class PlayScreen implements Screen
 		
 		if(Gdx.input.isKeyJustPressed(Input.Keys.UP))
 		{
-			mario.b2body.applyLinearImpulse(0, 4, 0, 0, true);
+//			mario.b2body.applyLinearImpulse(0, 4, mario.b2body.getWorldCenter().x - .5f, mario.b2body.getWorldCenter().y, true);
+			mario.b2body.applyLinearImpulse(new Vector2(0, 4), mario.b2body.getWorldCenter(), true);
+		}
+		if(Gdx.input.isKeyPressed(Input.Keys.RIGHT) && mario.b2body.getLinearVelocity().x < 2)
+		{
+			mario.b2body.applyLinearImpulse(new Vector2(.1f, 0), mario.b2body.getWorldCenter(), true);
+		}
+		if(Gdx.input.isKeyPressed(Input.Keys.LEFT) && mario.b2body.getLinearVelocity().x > -2)
+		{
+			mario.b2body.applyLinearImpulse(new Vector2(-.1f, 0), mario.b2body.getWorldCenter(), true);
 		}
 	}
 	
@@ -144,6 +153,7 @@ public class PlayScreen implements Screen
 		handleInput(dt);
 		
 		world.step(1/60f, 6, 2);
+		gameCam.position.x = mario.b2body.getWorldCenter().x;
 		gameCam.update();
 		
 		renderer.setView(gameCam);
