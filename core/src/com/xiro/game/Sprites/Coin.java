@@ -5,6 +5,7 @@
  */
 package com.xiro.game.Sprites;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -22,16 +23,23 @@ public class Coin extends InteractiveTileObject
 	public Coin(World world, TiledMap map, Rectangle bounds)
 	{
 		super(world, map, bounds);
-		BodyDef bdef = new BodyDef();
-		FixtureDef fdef = new FixtureDef();
-		PolygonShape shape = new PolygonShape();
+		fixture.setUserData(this);
+//		BodyDef bdef = new BodyDef();
+//		FixtureDef fdef = new FixtureDef();
+//		PolygonShape shape = new PolygonShape();
+//
+//		bdef.type = BodyDef.BodyType.StaticBody;
+//		bdef.position.set((bounds.getX() + bounds.getWidth() / 2) / Mario.PPM, (bounds.getY() + bounds.getHeight() / 2) / Mario.PPM);
+//
+//		body = world.createBody(bdef);
+//		shape.setAsBox(bounds.getWidth() / 2 / Mario.PPM, bounds.getHeight() / 2 / Mario.PPM);
+//		fdef.shape = shape;
+//		body.createFixture(fdef);
+	}
 
-		bdef.type = BodyDef.BodyType.StaticBody;
-		bdef.position.set((bounds.getX() + bounds.getWidth() / 2) / Mario.PPM, (bounds.getY() + bounds.getHeight() / 2) / Mario.PPM);
-
-		body = world.createBody(bdef);
-		shape.setAsBox(bounds.getWidth() / 2 / Mario.PPM, bounds.getHeight() / 2 / Mario.PPM);
-		fdef.shape = shape;
-		body.createFixture(fdef);
+	@Override
+	public void onHeadHit()
+	{
+		Gdx.app.log("coin", "hit");
 	}
 }

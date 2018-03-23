@@ -33,6 +33,7 @@ import com.xiro.game.MarioBros;
 import com.xiro.game.Scenes.Hud;
 import com.xiro.game.Sprites.Mario;
 import com.xiro.game.Tools.B2WorldCreator;
+import com.xiro.game.Tools.WorldContactListener;
 
 /**
  *
@@ -81,7 +82,7 @@ public class PlayScreen implements Screen
 		
 		new B2WorldCreator(world, map);
 		
-		
+		world.setContactListener(new WorldContactListener());
 		
 		
 	}
@@ -99,7 +100,7 @@ public class PlayScreen implements Screen
 //		{
 //			gameCam.position.x += 100 * dt;
 //		}
-		
+
 		if(Gdx.input.isKeyJustPressed(Input.Keys.UP))
 		{
 //			mario.b2body.applyLinearImpulse(0, 4, mario.b2body.getWorldCenter().x - .5f, mario.b2body.getWorldCenter().y, true);
