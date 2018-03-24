@@ -12,6 +12,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.xiro.game.MarioBros;
 
 /**
  *
@@ -24,6 +25,7 @@ public class Coin extends InteractiveTileObject
 	{
 		super(world, map, bounds);
 		fixture.setUserData(this);
+		setCategoryFilter(MarioBros.COIN_BIT);
 //		BodyDef bdef = new BodyDef();
 //		FixtureDef fdef = new FixtureDef();
 //		PolygonShape shape = new PolygonShape();

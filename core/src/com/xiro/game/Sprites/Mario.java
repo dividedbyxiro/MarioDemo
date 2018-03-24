@@ -87,6 +87,8 @@ public class Mario extends Sprite
 //		PolygonShape shape = new PolygonShape();
 //		shape.setAsBox(50/PPM, 5/PPM);
 		shape.setRadius(6 / PPM);
+		fdef.filter.categoryBits = MarioBros.MARIO_BIT;
+		fdef.filter.maskBits = MarioBros.DEFAULT_BIT | MarioBros.COIN_BIT | MarioBros.BRICK_BIT;
 		fdef.shape = shape;
 //		fdef.density = 10;
 		b2body.createFixture(fdef);
