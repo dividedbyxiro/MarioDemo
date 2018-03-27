@@ -80,7 +80,7 @@ public class PlayScreen implements Screen
 		
 		b2dr = new Box2DDebugRenderer();
 		
-		new B2WorldCreator(world, map);
+		new B2WorldCreator(world, map, hud);
 		
 		world.setContactListener(new WorldContactListener());
 		
@@ -124,6 +124,7 @@ public class PlayScreen implements Screen
 		gameCam.position.x = mario.b2body.getWorldCenter().x;
 		gameCam.update();
 		mario.update(dt);
+		hud.update(dt);
 		
 		renderer.setView(gameCam);
 	}
