@@ -6,6 +6,7 @@
 package com.xiro.game.Sprites;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileSet;
 import com.badlogic.gdx.math.Rectangle;
@@ -48,8 +49,14 @@ public class Coin extends InteractiveTileObject
 	@Override
 	public void onHeadHit()
 	{
-		Gdx.app.log("coin", "hit");
+//		Gdx.app.log("coin", "hit");
+		if(getCell().getTile().getId() == BLANK_COIN)
+		{
+			MarioBros.assetManager.get("audio/sounds/bump.wav", Sound.class).play();
+			return;
+		}
 		getCell().setTile(tileSet.getTile(BLANK_COIN));
+		MarioBros.assetManager.get("audio/sounds/coin.wav", Sound.class).play();
 		hud.addScore(200);
 	}
 }
