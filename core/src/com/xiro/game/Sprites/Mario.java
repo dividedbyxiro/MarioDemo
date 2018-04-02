@@ -27,21 +27,24 @@ import com.xiro.game.Screens.PlayScreen;
  */
 public class Mario extends Sprite
 {
-	public enum State {FALLING, JUMPING, STANDING, RUNNING};
+
+	public enum State
+	{
+		FALLING, JUMPING, STANDING, RUNNING
+	};
 	public State currentState;
 	public State previousState;
 	public World world;
 	public Body b2body;
-	
+
 	private TextureRegion marioStand;
 	private Animation marioRun;
 	private Animation marioJump;
 	private boolean runningRight;
 	private float stateTimer;
-	
-	
+
 	public static final float PPM = 100;
-	
+
 	public Mario(PlayScreen screen)
 	{
 		super(screen.getAtlas().findRegion("little_mario"));
@@ -57,64 +60,70 @@ public class Mario extends Sprite
 //		marioStand = new TextureRegion(getTexture(), 8, 20, 16, 16);
 		setBounds(0, 0, 16 / MarioBros.PPM, 16 / MarioBros.PPM);
 		setRegion(marioStand);
-		
+
 		Array<TextureRegion> frames = new Array<TextureRegion>();
-		for(int i = 1; i < 4; i++)
+		for (int i = 1; i < 4; i++)
 		{
 			frames.add(new TextureRegion(getTexture(), i * 16, 11, 16, 16));
 		}
 		marioRun = new Animation(.1f, frames);
 		frames.clear();
-		
-		for(int i = 4; i < 6; i++)
+
+		for (int i = 4; i < 6; i++)
 		{
 			frames.add(new TextureRegion(getTexture(), i * 16, 11, 16, 16));
 		}
 		marioJump = new Animation(.1f, frames);
 		frames.clear();
-		
+
 	}
-	
+
 	public void defineMario()
 	{
 		BodyDef bdef = new BodyDef();
 		bdef.position.set(32 / PPM, 50 / PPM);
 		bdef.type = BodyDef.BodyType.DynamicBody;
 		b2body = world.createBody(bdef);
-		
+
 		FixtureDef fdef = new FixtureDef();
 		CircleShape shape = new CircleShape();
 //		PolygonShape shape = new PolygonShape();
-//		shape.setAsBox(50/PPM, 5/PPM);
+//		shape.setAsBox(5/PPM, 5/PPM);
 		shape.setRadius(6 / PPM);
 		fdef.filter.categoryBits = MarioBros.MARIO_BIT;
-		fdef.filter.maskBits = MarioBros.DEFAULT_BIT | MarioBros.COIN_BIT | MarioBros.BRICK_BIT;
+		fdef.filter.maskBits
+				= MarioBros.OBJECT_BIT
+				| MarioBros.GROUND_BIT
+				| MarioBros.COIN_BIT
+				| MarioBros.BRICK_BIT
+				| MarioBros.ENEMY_BIT;
 		fdef.shape = shape;
 //		fdef.density = 10;
 		b2body.createFixture(fdef);
-		
+
 		EdgeShape head = new EdgeShape();
 		head.set(new Vector2(-2 / PPM, 7 / PPM), new Vector2(2 / PPM, 7 / PPM));
 		fdef.shape = head;
 		fdef.isSensor = true;
 		b2body.createFixture(fdef).setUserData("head");
-		
-		
+
+
+
 	}
-	
+
 	public void update(float dt)
 	{
 		setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
 		setRegion(getFrame(dt));
-		
+
 	}
-	
+
 	public TextureRegion getFrame(float deltaTime)
 	{
 		currentState = getState();
-		
+
 		TextureRegion region;
-		
+
 		switch (currentState)
 		{
 			case JUMPING:
@@ -129,40 +138,37 @@ public class Mario extends Sprite
 				region = marioStand;
 				break;
 		}
-		
-		if((b2body.getLinearVelocity().x < 0 || !runningRight) && !region.isFlipX())
+
+		if ((b2body.getLinearVelocity().x < 0 || !runningRight) && !region.isFlipX())
 		{
 			region.flip(true, false);
 			runningRight = false;
-		}
-		else if((b2body.getLinearVelocity().x > 0 || runningRight) && region.isFlipX())
+		} else if ((b2body.getLinearVelocity().x > 0 || runningRight) && region.isFlipX())
 		{
 			region.flip(true, false);
 			runningRight = true;
 		}
-		
+
 		stateTimer = currentState == previousState ? stateTimer + deltaTime : 0;
 		previousState = currentState;
 		return region;
 	}
-	
+
 	public State getState()
 	{
-		if(b2body.getLinearVelocity().y > 0.1 || (b2body.getLinearVelocity().y < 0 && previousState == State.JUMPING))
+		if (b2body.getLinearVelocity().y > 0.1 || (b2body.getLinearVelocity().y < 0 && previousState == State.JUMPING))
 		{
 			return State.JUMPING;
 		}
-		if(b2body.getLinearVelocity().y < 0)
+		if (b2body.getLinearVelocity().y < 0)
 		{
 			return State.FALLING;
 		}
-		if(b2body.getLinearVelocity().x != 0)
+		if (b2body.getLinearVelocity().x != 0)
 		{
 			return State.RUNNING;
 		}
 		return State.STANDING;
 	}
-		
-	
-	
+
 }

@@ -14,6 +14,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.xiro.game.MarioBros;
 import com.xiro.game.Scenes.Hud;
 import com.xiro.game.Screens.PlayScreen;
 import com.xiro.game.Sprites.Brick;
@@ -60,6 +61,7 @@ public class B2WorldCreator
 			body = world.createBody(bdef);
 			shape.setAsBox(rect.getWidth() / 2 / Mario.PPM, rect.getHeight() / 2 / Mario.PPM);
 			fdef.shape = shape;
+			fdef.filter.categoryBits = MarioBros.OBJECT_BIT;
 			body.createFixture(fdef);
 		}
 		for (MapObject object : map.getLayers().get(5).getObjects().getByType(RectangleMapObject.class))

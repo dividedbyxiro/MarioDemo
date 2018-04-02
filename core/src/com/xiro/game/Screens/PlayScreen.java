@@ -32,6 +32,7 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.xiro.game.MarioBros;
 import com.xiro.game.Scenes.Hud;
+import com.xiro.game.Sprites.Goomba;
 import com.xiro.game.Sprites.Mario;
 import com.xiro.game.Tools.B2WorldCreator;
 import com.xiro.game.Tools.WorldContactListener;
@@ -60,6 +61,8 @@ public class PlayScreen implements Screen
 	private TextureAtlas atlas;
 	
 	private Music music;
+	
+	private Goomba goomba;
 	
 	
 	
@@ -94,6 +97,7 @@ public class PlayScreen implements Screen
 		music.setLooping(true);
 		music.play();
 		
+		goomba = new Goomba(this, .32f, .32f);
 		
 	}
 
@@ -150,6 +154,7 @@ public class PlayScreen implements Screen
 		gameCam.position.x = mario.b2body.getWorldCenter().x;
 		gameCam.update();
 		mario.update(dt);
+		goomba.update(dt);
 		hud.update(dt);
 		
 		renderer.setView(gameCam);
@@ -173,6 +178,7 @@ public class PlayScreen implements Screen
 		game.batch.setProjectionMatrix(gameCam.combined);
 		game.batch.begin();
 		mario.draw(game.batch);
+		goomba.draw(game.batch);
 		game.batch.end();
 		
 		game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
