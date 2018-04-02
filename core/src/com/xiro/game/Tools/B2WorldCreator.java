@@ -15,6 +15,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.xiro.game.Scenes.Hud;
+import com.xiro.game.Screens.PlayScreen;
 import com.xiro.game.Sprites.Brick;
 import com.xiro.game.Sprites.Coin;
 import com.xiro.game.Sprites.Mario;
@@ -28,12 +29,16 @@ public class B2WorldCreator
 
 
 
-	public B2WorldCreator(World world, TiledMap map, Hud hud)
+//	public B2WorldCreator(World world, TiledMap map, Hud hud)
+	public B2WorldCreator(PlayScreen screen)
 	{
 		BodyDef bdef = new BodyDef();
 		PolygonShape shape = new PolygonShape();
 		FixtureDef fdef = new FixtureDef();
 		Body body;
+		World world = screen.getWorld();
+		TiledMap map = screen.getMap();
+		Hud hud = screen.getHud();
 
 		for (MapObject object : map.getLayers().get(2).getObjects().getByType(RectangleMapObject.class))
 		{
@@ -60,12 +65,12 @@ public class B2WorldCreator
 		for (MapObject object : map.getLayers().get(5).getObjects().getByType(RectangleMapObject.class))
 		{
 			Rectangle rect = ((RectangleMapObject) object).getRectangle();
-			new Brick(world, map, rect, hud);
+			new Brick(screen, rect);
 		}
 		for (MapObject object : map.getLayers().get(4).getObjects().getByType(RectangleMapObject.class))
 		{
 			Rectangle rect = ((RectangleMapObject) object).getRectangle();
-			new Coin(world, map, rect, hud);
+			new Coin(screen, rect);
 		}
 	}
 

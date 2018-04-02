@@ -16,6 +16,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.xiro.game.MarioBros;
 import com.xiro.game.Scenes.Hud;
+import com.xiro.game.Screens.PlayScreen;
 
 /**
  *
@@ -26,9 +27,10 @@ public class Coin extends InteractiveTileObject
 	private static TiledMapTileSet tileSet;
 	private final int BLANK_COIN = 28;
 
-	public Coin(World world, TiledMap map, Rectangle bounds, Hud hud)
+//	public Coin(World world, TiledMap map, Rectangle bounds, Hud hud)
+	public Coin(PlayScreen screen, Rectangle bounds)
 	{
-		super(world, map, bounds, hud);
+		super(screen, bounds);
 		fixture.setUserData(this);
 		setCategoryFilter(MarioBros.COIN_BIT);
 //		tileSet = map.getTileSets().getTileSet("tileset_gutter");

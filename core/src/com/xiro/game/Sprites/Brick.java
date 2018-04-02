@@ -12,6 +12,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.World;
 import com.xiro.game.MarioBros;
 import com.xiro.game.Scenes.Hud;
+import com.xiro.game.Screens.PlayScreen;
 
 /**
  *
@@ -19,9 +20,10 @@ import com.xiro.game.Scenes.Hud;
  */
 public class Brick extends InteractiveTileObject
 {
-	public Brick(World world, TiledMap map, Rectangle bounds, Hud hud)
+//	public Brick(World world, TiledMap map, Rectangle bounds, Hud hud)
+	public Brick(PlayScreen screen, Rectangle bounds)
 	{
-		super(world, map, bounds, hud);
+		super(screen, bounds);
 		fixture.setUserData(this);
 		setCategoryFilter(MarioBros.BRICK_BIT);
 	}

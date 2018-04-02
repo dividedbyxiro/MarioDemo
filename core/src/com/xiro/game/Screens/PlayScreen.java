@@ -80,11 +80,12 @@ public class PlayScreen implements Screen
 		atlas = new TextureAtlas("Mario_and_Enemies.pack");
 		
 		world = new World(new Vector2(0, -10f), true);
-		mario = new Mario(world, this);
+		mario = new Mario(this);
 		
 		b2dr = new Box2DDebugRenderer();
 		
-		new B2WorldCreator(world, map, hud);
+//		new B2WorldCreator(world, map, hud);
+		new B2WorldCreator(this);
 		
 		world.setContactListener(new WorldContactListener());
 		

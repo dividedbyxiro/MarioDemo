@@ -18,6 +18,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.xiro.game.MarioBros;
 import com.xiro.game.Scenes.Hud;
+import com.xiro.game.Screens.PlayScreen;
 
 /**
  *
@@ -33,12 +34,13 @@ public abstract class InteractiveTileObject
 	protected Fixture fixture;
 	protected Hud hud;
 	
-	public InteractiveTileObject(World world, TiledMap map, Rectangle bounds, Hud hud)
+//	public InteractiveTileObject(World world, TiledMap map, Rectangle bounds, Hud hud)
+	public InteractiveTileObject(PlayScreen screen, Rectangle bounds)
 	{
-		this.world = world;
-		this.map = map;
+		this.world = screen.getWorld();
+		this.map = screen.getMap();
 		this.bounds = bounds;
-		this.hud = hud;
+		this.hud = screen.getHud();
 		
 		BodyDef bdef = new BodyDef();
 		FixtureDef fdef = new FixtureDef();

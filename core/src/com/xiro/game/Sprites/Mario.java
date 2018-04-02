@@ -42,12 +42,12 @@ public class Mario extends Sprite
 	
 	public static final float PPM = 100;
 	
-	public Mario(World world, PlayScreen screen)
+	public Mario(PlayScreen screen)
 	{
 		super(screen.getAtlas().findRegion("little_mario"));
 //		super(screen.getAtlas().findRegion("goomba"));
 //		super(new TextureRegion(new Texture("Mario_and_Enemies.png"), 0, 0, 20, 20));
-		this.world = world;
+		this.world = screen.getWorld();
 		defineMario();
 		marioStand = new TextureRegion(getTexture(), 1, 11, 16, 16);
 		currentState = previousState = State.STANDING;
