@@ -97,7 +97,7 @@ public class PlayScreen implements Screen
 		music.setLooping(true);
 		music.play();
 		
-		goomba = new Goomba(this, .32f, .32f);
+		goomba = new Goomba(this, .5f, .32f);
 		
 	}
 

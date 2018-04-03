@@ -12,6 +12,8 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
+import com.xiro.game.MarioBros;
+import com.xiro.game.Sprites.Enemy;
 import com.xiro.game.Sprites.InteractiveTileObject;
 import jdk.nashorn.internal.parser.TokenType;
 
@@ -27,6 +29,7 @@ public class WorldContactListener implements ContactListener
 	{
 		Fixture fixA = contact.getFixtureA();
 		Fixture fixB = contact.getFixtureB();
+		int cDef = fixA.getFilterData().categoryBits | fixB.getFilterData().categoryBits;
 
 		if (fixA.getUserData() == "head" || fixB.getUserData() == "head")
 		{
@@ -38,28 +41,19 @@ public class WorldContactListener implements ContactListener
 				((InteractiveTileObject) object.getUserData()).onHeadHit();
 			}
 		}
-//		Fixture head;
-//		Fixture object = fixB;
-//		if(fixA.getUserData().equals("head"))
-//		{
-//			head = fixA;
-//			object = fixB;
-//		}
-//		else if(fixB.getUserData().equals("head"))
-//		{
-//			head = fixB;
-//			object = fixA;
-//		}
-//		else
-//		{
-//			return;
-//		}
-//		
-//		if(object.getUserData() instanceof InteractiveTileObject)
-//		{
-//			((InteractiveTileObject)object.getUserData()).onHeadHit();
-//			
-//		}
+		
+		switch(cDef)
+		{
+			case MarioBros.ENEMY_HEAD_BIT | MarioBros.MARIO_BIT:
+				if(fixA.getFilterData().categoryBits == MarioBros.ENEMY_HEAD_BIT)
+				{
+					((Enemy)fixA.getUserData()).hitOnHead();
+				}
+				else if(fixB.getFilterData().categoryBits == MarioBros.ENEMY_HEAD_BIT)
+				{
+					((Enemy)fixB.getUserData()).hitOnHead();
+				}
+		}
 	}
 
 	@Override

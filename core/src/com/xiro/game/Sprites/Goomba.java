@@ -7,9 +7,11 @@ package com.xiro.game.Sprites;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.utils.Array;
 import com.xiro.game.MarioBros;
 import com.xiro.game.Screens.PlayScreen;
@@ -25,6 +27,9 @@ public class Goomba extends Enemy
 	private float stateTime;
 	private Animation walkAnimation;
 	private Array<TextureRegion> frames;
+	private boolean setToDestroy;
+	private boolean destroyed;
+	
 	public Goomba(PlayScreen screen, float x, float y)
 	{
 		super(screen, x, y);
@@ -36,13 +41,15 @@ public class Goomba extends Enemy
 		walkAnimation = new Animation(0.4f, frames);
 		stateTime = 0;
 		setBounds(getX(), getY(), 16 / PPM, 16 / PPM);
+		setToDestroy = destroyed = false;
 	}
 
 	@Override
 	protected void defineEnemy()
 	{
 		BodyDef bdef = new BodyDef();
-		bdef.position.set(32 / PPM, 50 / PPM);
+//		bdef.position.set(32 / PPM, 50 / PPM);
+		bdef.position.set(getX(), getY());
 		bdef.type = BodyDef.BodyType.DynamicBody;
 		b2body = world.createBody(bdef);
 
@@ -62,12 +69,41 @@ public class Goomba extends Enemy
 		fdef.shape = shape;
 //		fdef.density = 10;
 		b2body.createFixture(fdef);
+		
+		PolygonShape head = new PolygonShape();
+		Vector2[] vertice = new Vector2[4];
+		vertice[0] = new Vector2(-5, 8).scl(1 / PPM);
+		vertice[1] = new Vector2(5, 8).scl(1 / PPM);
+		vertice[2] = new Vector2(-3, 3).scl(1 / PPM);
+		vertice[3] = new Vector2(3, 3).scl(1 / PPM);
+		head.set(vertice);
+		fdef.shape = head;
+		fdef.restitution = .5f;
+		fdef.filter.categoryBits = MarioBros.ENEMY_HEAD_BIT;
+		b2body.createFixture(fdef).setUserData(this);
 	}
 
 	public void update(float dt)
 	{
 		stateTime += dt;
-		setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
-		setRegion((TextureRegion) walkAnimation.getKeyFrame(stateTime, true));
+		if(setToDestroy && !destroyed)
+		{
+			world.destroyBody(b2body);
+			destroyed = true;
+			setRegion(new TextureRegion(screen.getAtlas().findRegion("goomba"), 32, 0, 16, 16));
+		}
+		else if (!destroyed)
+		{
+			setPosition(b2body.getPosition().x - getWidth() / 2, b2body.getPosition().y - getHeight() / 2);
+			setRegion((TextureRegion) walkAnimation.getKeyFrame(stateTime, true));
+		}
 	}
+
+	@Override
+	public void hitOnHead()
+	{
+		setToDestroy = true;
+	}
+	
+	
 }
