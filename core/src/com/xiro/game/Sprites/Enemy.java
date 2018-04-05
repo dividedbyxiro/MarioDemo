@@ -29,10 +29,12 @@ public abstract class Enemy extends Sprite
 		setPosition(x, y);
 		defineEnemy();
 		velocity = new Vector2(.5f, 0);
+		b2body.setActive(false);
 	}
 	
 	protected abstract void defineEnemy();
 	public abstract void hitOnHead();
+	public abstract void update(float dt);
 	
 	public void reverseVelocity(boolean x, boolean y)
 	{

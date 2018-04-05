@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.1.3" orientation="orthogonal" renderorder="right-down" width="240" height="13" tilewidth="16" tileheight="16" infinite="0" nextobjectid="183">
+<map version="1.0" tiledversion="1.1.3" orientation="orthogonal" renderorder="right-down" width="240" height="13" tilewidth="16" tileheight="16" infinite="0" nextobjectid="192">
  <tileset firstgid="1" name="tileset_gutter" tilewidth="16" tileheight="16" spacing="2" margin="1" tilecount="924" columns="33">
   <image source="tileset_gutter.png" width="594" height="504"/>
   <tile id="0">
@@ -118,7 +118,7 @@
  </layer>
  <layer name="Graphic Layer" width="240" height="13">
   <data encoding="base64" compression="zlib">
-   eJztl8lOwzAQhq15A7jxGvAKnFnEdugRJOAEiPVWKlViuQNnXgLIs+XCmNbKZPAaO0lT2dInp87Y/j3xXycFCFEgvBSQyWSGAvUt97Gu6NrfsO0d+YjQocaIHSdm7th5h76GrH/Gccdrb4os8+qvLmFWA2unvwWLl+UL62/kxyOvptyqMWzjtLUfXPqXYQ1Zvz/TBvr7Aogf5e8S6l7l1yXrQ9+5S8ezSbk3YvdD0/GGuoas358pm7OLXDVF+ZG2gai8COT8LUk8rUsy1kiY59oUYfSdGxch+mm7LUcuQvva8qm0jAaS71hOxAxX3LRlHSkBzVkKzKuu85f613deem5nMm2jvLtM/qXvzbQG8f+MLaD+zQvEuxTTXPTsCan7zlFm+FDvLpN/bahiu9/2/H3nIDN8uHdj/LslKvpelw+08Hv8O6yrs3MFWQU/f4fE+pJifaa+pu9Ummt6vWYZJ0SLLZ7ud5+9T2Ob9uXamuZb590Y/25j3x1kN3I/7SH7Ef0XEfnu/QmV50xx68gGVJ48C4hdVGxr6BOdB3X7n+vXecXXO6m1+/iX69f5V565F4SYM/gGuV2A5xuy71y+VCjPue7Lcor1M3LuERurvy1ca0j5DEKweZC2cf0mr5j8o/T77g+f/WXzLp9fl3+df3fmZ++lqK5Dn8EBcogcQbf+HSOPhIlh3Tx+QtpcvtTFjdmcJbmv5n+x6FCxKfSnyB0fz2cNKZ+BL3y/q7F4O9dv8wpv5/r5/gjVr/q7vKv775H6X6H+H2Ty7xXx79N8DNrXxh1yjzxAvH+vRYaTKjc5z+lzmqnzC0KT6qA=
+   eJztl89O3DAQxq15g3LjNdpX4MwflcKBY5GAE6CWlhsgrdSWO3DmJYB9tlxw2B3l26ljj2Nns1nZ0k9OnLE9nsynSaZkzNQi25QKhcJYQN1KHbuaa/zBjj1anhL84DVS10nZO3XfsZ+h+D/j+5LP3pW6zbuPvqJZT2Ic742wr9uL7V8tb4q4tsWW1/Ct01c+hPxfhzMU//VMOvg/FAR6rO8rWtSqvK7EHPzmrgLvJmdupOZD1/XGeobiv56J2HMZseoK6xHHyDRaJKi/FdhjX8FaR6Z9ry0Tx9CxCRHjP477YhQidq4vnuzL0UjincqxmRGym/TsR07IUUtJaDVUf1G/2n2xbhcKfcPaXSf94ncz9mT+r7FTWvznJdAu0rYX1p6YfugYFcYPaned9OuDm+953/sPHYPC+JHaTdHvtmkY+lwasMln8j9sWbXzk2WDdPqOsdWS43xtc9v+UzHWeL3pWSfGF5895rsm99G261zpW9d4u7Sbot8dO3fXspeYT18t+wnzV5H62/uZGs212X22fKFGk6cRtquK7wxD4tKgK/+l/y6taLWT23eNfqX/Lv3WNfccSKnBPy1XK/B+Y/IupEuGNRd6XrcT2/+1nClsU/3vi9AZcr4DDd8sB+TXINYP9J/HfXOlfth/bX5o8sunXbm/K/4u/e7Oa++Faa5j3wHH9pCWq98byy1w13JuaX8HYyFduuxuxJ4VPOf9/3n8YNsc/ueInVxPc4ac70DDL8tvWsx3XovvuX5I/3k8pN8a6b/Mj1j/eX5Iu+gT+n8PcXTVaNbsJej3z3wNnKuJ7TWl6/eHKUhyxabEOX9MC4u8A4646Q0=
   </data>
  </layer>
  <objectgroup name="Ground">
@@ -128,13 +128,8 @@
   <object id="26" x="2208" y="128" width="16" height="64"/>
   <object id="27" x="2192" y="144" width="16" height="48"/>
   <object id="28" x="2176" y="160" width="16" height="32"/>
-  <object id="29" x="2160" y="176" width="16" height="16"/>
   <object id="30" x="2256" y="128" width="16" height="64"/>
   <object id="31" x="2272" y="144" width="16" height="48"/>
-  <object id="32" x="2288" y="160" width="16" height="32"/>
-  <object id="33" x="2304" y="176" width="16" height="16"/>
-  <object id="34" x="2384" y="176" width="16" height="16"/>
-  <object id="35" x="2400" y="160" width="16" height="32"/>
   <object id="36" x="2416" y="144" width="16" height="48"/>
   <object id="37" x="2432" y="128" width="32" height="64"/>
   <object id="38" x="2496" y="128" width="16" height="64"/>
@@ -152,6 +147,7 @@
   <object id="52" x="2928" y="160" width="16" height="32"/>
   <object id="53" x="2912" y="176" width="16" height="16"/>
   <object id="54" x="3184" y="176" width="16" height="16"/>
+  <object id="189" x="2288" y="160" width="32" height="32"/>
  </objectgroup>
  <objectgroup name="Pipes">
   <object id="61" x="3568" y="128" width="32" height="64"/>
@@ -162,6 +158,8 @@
   <object id="67" x="608" y="144" width="32" height="48"/>
   <object id="68" x="736" y="128" width="32" height="64"/>
   <object id="69" x="912" y="128" width="32" height="64"/>
+  <object id="183" x="2384" y="160" width="32" height="32"/>
+  <object id="191" x="2144" y="160" width="32" height="32"/>
  </objectgroup>
  <objectgroup name="Coins">
   <object id="70" x="256" y="128" width="16" height="16"/>

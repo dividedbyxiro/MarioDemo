@@ -32,6 +32,7 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.xiro.game.MarioBros;
 import com.xiro.game.Scenes.Hud;
+import com.xiro.game.Sprites.Enemy;
 import com.xiro.game.Sprites.Goomba;
 import com.xiro.game.Sprites.Mario;
 import com.xiro.game.Tools.B2WorldCreator;
@@ -43,29 +44,29 @@ import com.xiro.game.Tools.WorldContactListener;
  */
 public class PlayScreen implements Screen
 {
+
 	private MarioBros game;
 
 	private OrthographicCamera gameCam;
 	private Viewport gamePort;
 	private Hud hud;
-	
+
 	private TmxMapLoader mapLoader;
 	private TiledMap map;
 	private OrthogonalTiledMapRenderer renderer;
-	
+
 	private World world;
 	private Box2DDebugRenderer b2dr;
-	
+
 	private Mario mario;
-	
+
 	private TextureAtlas atlas;
-	
+
 	private Music music;
-	
+
 	private Goomba goomba;
-	
-	
-	
+	private B2WorldCreator creator;
+
 	public PlayScreen(MarioBros game)
 	{
 		this.game = game;
@@ -73,32 +74,31 @@ public class PlayScreen implements Screen
 		gameCam = new OrthographicCamera();
 		gamePort = new FitViewport(MarioBros.V_WIDTH / Mario.PPM, MarioBros.V_HEIGHT / Mario.PPM, gameCam);
 		hud = new Hud(game.batch);
-		
+
 		mapLoader = new TmxMapLoader();
 		map = mapLoader.load("level1.tmx");
 		renderer = new OrthogonalTiledMapRenderer(map, 1 / Mario.PPM);
-		
+
 		gameCam.position.set(gamePort.getWorldWidth() / 2, gamePort.getWorldHeight() / 2, 0);
-		
+
 		atlas = new TextureAtlas("Mario_and_Enemies.pack");
-		
+
 		world = new World(new Vector2(0, -10f), true);
 		mario = new Mario(this);
-		
+
 		b2dr = new Box2DDebugRenderer();
-		
+
 //		new B2WorldCreator(world, map, hud);
-		new B2WorldCreator(this);
-		
+		creator = new B2WorldCreator(this);
+
 		world.setContactListener(new WorldContactListener());
-		
+
 //		music = MarioBros.assetManager.get("audio\\music\\mario_music.ogg", Music.class);
 		music = MarioBros.assetManager.get("audio/music/mario_music.ogg");
 		music.setLooping(true);
 		music.play();
-		
-		goomba = new Goomba(this, 5.5f, .32f);
-		
+
+//		goomba = new Goomba(this, 5.5f, .32f);
 	}
 
 	public TextureAtlas getAtlas()
@@ -120,10 +120,7 @@ public class PlayScreen implements Screen
 	{
 		return hud;
 	}
-	
-	
-	
-	
+
 	public void handleInput(float dt)
 	{
 //		if(Gdx.input.isTouched())
@@ -131,32 +128,41 @@ public class PlayScreen implements Screen
 //			gameCam.position.x += 100 * dt;
 //		}
 
-		if(Gdx.input.isKeyJustPressed(Input.Keys.UP))
+		if (Gdx.input.isKeyJustPressed(Input.Keys.UP))
 		{
 //			mario.b2body.applyLinearImpulse(0, 4, mario.b2body.getWorldCenter().x - .5f, mario.b2body.getWorldCenter().y, true);
 			mario.b2body.applyLinearImpulse(new Vector2(0, 4), mario.b2body.getWorldCenter(), true);
 		}
-		if(Gdx.input.isKeyPressed(Input.Keys.RIGHT) && mario.b2body.getLinearVelocity().x < 2)
+		if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) && mario.b2body.getLinearVelocity().x < 2)
 		{
 			mario.b2body.applyLinearImpulse(new Vector2(.1f, 0), mario.b2body.getWorldCenter(), true);
 		}
-		if(Gdx.input.isKeyPressed(Input.Keys.LEFT) && mario.b2body.getLinearVelocity().x > -2)
+		if (Gdx.input.isKeyPressed(Input.Keys.LEFT) && mario.b2body.getLinearVelocity().x > -2)
 		{
 			mario.b2body.applyLinearImpulse(new Vector2(-.1f, 0), mario.b2body.getWorldCenter(), true);
 		}
 	}
-	
+
 	public void update(float dt)
 	{
 		handleInput(dt);
-		
-		world.step(1/60f, 6, 2);
+
+		world.step(1 / 60f, 6, 2);
 		gameCam.position.x = mario.b2body.getWorldCenter().x;
 		gameCam.update();
 		mario.update(dt);
-		goomba.update(dt);
+//		goomba.update(dt);
+		for (Enemy enemy : creator.getGoombas())
+		{
+//			if(enemy.getX() < mario.getX() + 224 / MarioBros.PPM)
+			if(enemy.getX() < mario.getX() + 1)
+			{
+				enemy.b2body.setActive(true);
+			}
+			enemy.update(dt);
+		}
 		hud.update(dt);
-		
+
 		renderer.setView(gameCam);
 	}
 
@@ -172,21 +178,24 @@ public class PlayScreen implements Screen
 		update(delta);
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		
+
 		renderer.render();
-		
+
 		game.batch.setProjectionMatrix(gameCam.combined);
 		game.batch.begin();
 		mario.draw(game.batch);
-		goomba.draw(game.batch);
+//		goomba.draw(game.batch);
+		for (Enemy enemy : creator.getGoombas())
+		{
+			enemy.draw(game.batch);
+		}
 		game.batch.end();
-		
+
 		game.batch.setProjectionMatrix(hud.stage.getCamera().combined);
 		hud.stage.draw();
-		
-		
+
 		b2dr.SHAPE_STATIC.set(1, 0, 0, 1);
-		b2dr.SHAPE_AWAKE.set(1,0,0,1);
+		b2dr.SHAPE_AWAKE.set(1, 0, 0, 1);
 		b2dr.render(world, gameCam.combined);
 	}
 
@@ -225,5 +234,5 @@ public class PlayScreen implements Screen
 		hud.dispose();
 		//throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
 	}
-	
+
 }

@@ -84,6 +84,7 @@ public class Goomba extends Enemy
 		b2body.createFixture(fdef).setUserData(this);
 	}
 
+	@Override
 	public void update(float dt)
 	{
 		stateTime += dt;

@@ -67,6 +67,10 @@ public class WorldContactListener implements ContactListener
 			case MarioBros.ENEMY_BIT | MarioBros.MARIO_BIT:
 				Gdx.app.log("Mario", "ded");
 				break;
+			case MarioBros.ENEMY_BIT:
+				((Enemy)fixA.getUserData()).reverseVelocity(true, false);
+				((Enemy)fixB.getUserData()).reverseVelocity(true, false);
+				break;
 		}
 	}
 

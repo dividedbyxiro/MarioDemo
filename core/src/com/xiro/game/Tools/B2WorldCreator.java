@@ -14,11 +14,13 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 import com.xiro.game.MarioBros;
 import com.xiro.game.Scenes.Hud;
 import com.xiro.game.Screens.PlayScreen;
 import com.xiro.game.Sprites.Brick;
 import com.xiro.game.Sprites.Coin;
+import com.xiro.game.Sprites.Goomba;
 import com.xiro.game.Sprites.Mario;
 
 /**
@@ -28,6 +30,7 @@ import com.xiro.game.Sprites.Mario;
 public class B2WorldCreator
 {
 
+	private Array<Goomba> goombas;
 
 
 //	public B2WorldCreator(World world, TiledMap map, Hud hud)
@@ -41,6 +44,8 @@ public class B2WorldCreator
 		TiledMap map = screen.getMap();
 		Hud hud = screen.getHud();
 
+		
+		
 		for (MapObject object : map.getLayers().get(2).getObjects().getByType(RectangleMapObject.class))
 		{
 			Rectangle rect = ((RectangleMapObject) object).getRectangle();
@@ -74,6 +79,18 @@ public class B2WorldCreator
 			Rectangle rect = ((RectangleMapObject) object).getRectangle();
 			new Coin(screen, rect);
 		}
+		
+		goombas = new Array<Goomba>();
+		for (MapObject object : map.getLayers().get(6).getObjects().getByType(RectangleMapObject.class))
+		{
+			Rectangle rect = ((RectangleMapObject) object).getRectangle();
+			goombas.add(new Goomba(screen, rect.getX() / MarioBros.PPM, rect.getY() / MarioBros.PPM));
+		}
+	}
+
+	public Array<Goomba> getGoombas()
+	{
+		return goombas;
 	}
 
 }
