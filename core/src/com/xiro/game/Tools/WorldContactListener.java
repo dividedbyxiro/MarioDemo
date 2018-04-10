@@ -15,6 +15,8 @@ import com.badlogic.gdx.physics.box2d.Manifold;
 import com.xiro.game.MarioBros;
 import com.xiro.game.Sprites.Enemy;
 import com.xiro.game.Sprites.InteractiveTileObject;
+import com.xiro.game.Sprites.Item;
+import com.xiro.game.Sprites.Mario;
 import jdk.nashorn.internal.parser.TokenType;
 
 /**
@@ -41,8 +43,7 @@ public class WorldContactListener implements ContactListener
 				((InteractiveTileObject) object.getUserData()).onHeadHit();
 			}
 		}
-		
-		switch(cDef)
+		else switch(cDef)
 		{
 			case MarioBros.ENEMY_HEAD_BIT | MarioBros.MARIO_BIT:
 				if(fixA.getFilterData().categoryBits == MarioBros.ENEMY_HEAD_BIT)
@@ -71,6 +72,29 @@ public class WorldContactListener implements ContactListener
 				((Enemy)fixA.getUserData()).reverseVelocity(true, false);
 				((Enemy)fixB.getUserData()).reverseVelocity(true, false);
 				break;
+			case MarioBros.ITEM_BIT | MarioBros.OBJECT_BIT:
+				if(fixA.getFilterData().categoryBits == MarioBros.ITEM_BIT)
+				{
+					((Item)fixA.getUserData()).reverseVelocity(true, false);
+				}
+				else
+				{
+					((Item)fixB.getUserData()).reverseVelocity(true, false);
+				}
+				break;
+			case MarioBros.ITEM_BIT | MarioBros.MARIO_BIT:
+				if(fixA.getFilterData().categoryBits == MarioBros.ITEM_BIT)
+				{
+//					System.out.println("fixA " + fixA + "collided with fixB " + fixB);
+					((Item)fixA.getUserData()).useItem((Mario)fixB.getUserData());
+				}
+				else
+				{
+//					System.out.println("fixB " + fixB + "collided with fixA " + fixA);
+					((Item)fixB.getUserData()).useItem((Mario)fixA.getUserData());
+				}
+				break;
+				
 		}
 	}
 

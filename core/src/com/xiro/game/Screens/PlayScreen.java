@@ -127,12 +127,19 @@ public class PlayScreen implements Screen
 			{
 				System.out.println("handleSawningItems iDef == Mushroom");
 				items.add(new Mushroom(this, iDef.position.x, iDef.position.y));
-				System.out.println("completed");
+				System.out.println("handleSpawningItems items.add completed");
 			}
 		}
 
 	}
 
+	public Array<Item> getItems()
+	{
+		return items;
+	}
+
+	
+	
 	public TextureAtlas getAtlas()
 	{
 		return atlas;
@@ -185,6 +192,8 @@ public class PlayScreen implements Screen
 		gameCam.update();
 		mario.update(dt);
 //		goomba.update(dt);
+
+//		System.out.println("updating goombas");
 		for (Enemy enemy : creator.getGoombas())
 		{
 //			if(enemy.getX() < mario.getX() + 224 / MarioBros.PPM)
@@ -194,11 +203,14 @@ public class PlayScreen implements Screen
 			}
 			enemy.update(dt);
 		}
+//		System.out.println("finished updating goombas");
+//		System.out.println("updating items");
 		for(Item item : items)
 		{
 //			System.out.println("updating item " + item);
 			item.update(dt);
 		}
+//		System.out.println("finished updating items");
 		hud.update(dt);
 
 		renderer.setView(gameCam);

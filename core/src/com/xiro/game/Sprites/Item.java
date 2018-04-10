@@ -19,15 +19,16 @@ import com.xiro.game.Screens.PlayScreen;
  */
 public abstract class Item extends Sprite
 {
+
 	protected PlayScreen screen;
 	protected World world;
 	protected Vector2 velocity;
-	
+
 	protected boolean toDestroy;
 	protected boolean destroyed;
-	
+
 	protected Body body;
-	
+
 	public Item(PlayScreen screen, float x, float y)
 	{
 		System.out.println("starting to make item");
@@ -37,40 +38,54 @@ public abstract class Item extends Sprite
 		setPosition(x, y);
 		System.out.println("Position set to " + x + ", " + y);
 		System.out.println("getX() is " + getX() + " getY() is " + getY());
-		
+
 		setBounds(getX(), getY(), 16 / MarioBros.PPM, 16 / MarioBros.PPM);
-		
-		System.out.println("setPosition and setRegion done");
+
+		System.out.println("item setPosition and setRegion done");
 		defineItem();
 		toDestroy = destroyed = false;
 		System.out.println("finishing item constructor");
 	}
-	
+
 	public abstract void defineItem();
-	public abstract void useItem();
+
+	public abstract void useItem(Mario mario);
 
 	public void update(float dt)
 	{
-		if(toDestroy && !destroyed)
+		if (toDestroy && !destroyed)
 		{
 			world.destroyBody(body);
+			body = null;
+//			screen.getItems().removeValue(this, true);
 			destroyed = true;
 		}
 	}
-	
+
 	public void destroy()
 	{
 		toDestroy = true;
 	}
-	
+
 	@Override
 	public void draw(Batch batch)
 	{
-		if(!destroyed)
+		if (!destroyed)
 		{
 			super.draw(batch);
 		} //To change body of generated methods, choose Tools | Templates.
 	}
-	
-	
+
+	public void reverseVelocity(boolean x, boolean y)
+	{
+		if (x)
+		{
+			velocity.x *= -1;
+		}
+		if (y)
+		{
+			velocity.y *= -1;
+		}
+	}
+
 }
